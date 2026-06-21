@@ -1,4 +1,5 @@
 package com.library.ReadFlow.services;
+import com.library.ReadFlow.exceptions.GenreException;
 import com.library.ReadFlow.payload.dtos.GenreDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

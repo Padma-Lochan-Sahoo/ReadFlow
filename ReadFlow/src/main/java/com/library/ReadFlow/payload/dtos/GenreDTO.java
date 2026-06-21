@@ -30,7 +30,7 @@ public class GenreDTO {
     @Min(value = 0,message = "Display Order cannot be negative")
     private Integer displayOrder=0;
 
-    private Boolean active;
+    private Boolean active=true;
 
     private Long parentGenreId;
 

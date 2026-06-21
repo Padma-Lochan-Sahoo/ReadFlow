@@ -1,6 +1,7 @@
 package com.library.ReadFlow.services.impl;
 
 import com.library.ReadFlow.entites.Genre;
+import com.library.ReadFlow.exceptions.GenreException;
 import com.library.ReadFlow.mapper.GenreMapper;
 import com.library.ReadFlow.payload.dtos.GenreDTO;
 import com.library.ReadFlow.repositories.GenreRepository;
@@ -18,11 +19,25 @@ public class GenreServiceImpl implements GenreService {
 
     private final GenreRepository genreRepository;
     private final GenreMapper genreMapper;
+
     @Override
     public GenreDTO createGenre(GenreDTO genreDTO) {
-       Genre genre = genreMapper.toEntity(genreDTO);
 
-       Genre savedGenre = genreRepository.save(genre);
+        Genre genre = genreMapper.toEntity(genreDTO);
+
+        if (genreDTO.getParentGenreId() != null) {
+
+            Genre parentGenre = genreRepository
+                    .findById(genreDTO.getParentGenreId())
+                    .orElseThrow(
+                            () -> new GenreException("Parent genre not found")
+                    );
+
+            genre.setParentGenre(parentGenre);
+        }
+
+        Genre savedGenre = genreRepository.save(genre);
+
         return genreMapper.toDTO(savedGenre);
     }
     @Override
@@ -35,9 +50,11 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public GenreDTO getGenreById(Long id) {
-        Optional<Genre> genre = genreRepository.findById(id);
-        return genre;
+    public GenreDTO getGenreById(Long genreId) throws GenreException {
+        Genre genre = genreRepository.findById(genreId).orElseThrow(
+                () -> new GenreException("Genre not found")
+        );
+        return genreMapper.toDTO(genre);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.library.ReadFlow.controllers;
 
 import com.library.ReadFlow.entites.Genre;
+import com.library.ReadFlow.exceptions.GenreException;
 import com.library.ReadFlow.payload.dtos.GenreDTO;
 import com.library.ReadFlow.services.GenreService;
 import jakarta.validation.Valid;
@@ -30,7 +31,7 @@ public class GenreController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<GenreDTO> getGenreById(@PathVariable Long id){
+    public ResponseEntity<GenreDTO> getGenreById(@PathVariable Long id) {
         GenreDTO genre = genreService.getGenreById(id);
         return ResponseEntity.status(HttpStatus.OK).body(genre);
     }

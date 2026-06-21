@@ -23,16 +23,18 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Genre code is mandatory")
+    @NotBlank
+    @Column(nullable = false,length = 20)
     private String code;
 
-    @NotBlank(message = "Genre name is mandatory")
+    @NotBlank
+    @Column(nullable = false,length = 100)
     private String name;
 
-    @Size(max = 500, message = "Description must not exceed 500 characters")
+    @Size(max = 500)
     private String description;
 
-    @Min(value = 0,message = "Display Order cannot be negative")
+    @Min(value = 0)
     private Integer displayOrder=0;
 
     @Column(nullable = false)
@@ -45,6 +47,7 @@ public class Genre {
     @OneToMany(
             mappedBy = "parentGenre",
             cascade = CascadeType.ALL
+//            orphanRemoval = true
     )
     private List<Genre> subGenres = new ArrayList<Genre>();
 

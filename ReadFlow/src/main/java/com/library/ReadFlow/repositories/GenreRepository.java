@@ -7,9 +7,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface GenreRepository extends JpaRepository<Genre, Long> {
+
+    boolean existsByCode(String code);
+
+    boolean existsByName(String name);
+
+    Optional<Genre> findByCode(String code);
+
     List<Genre> findByActiveTrueOrderByDisplayOrderAsc();
 
     List<Genre> findByParentGenreIsNullAndActiveTrueOrderByDisplayOrderAsc();

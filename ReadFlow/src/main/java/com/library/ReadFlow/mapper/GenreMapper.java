@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
 public class GenreMapper {
-    private final GenreRepository genreRepository;
     public GenreDTO toDTO(Genre savedGenre){
         if(savedGenre == null) {
             return null;
@@ -49,19 +47,13 @@ public class GenreMapper {
         if(genreDTO == null){
             return null;
         }
-        Genre genre = Genre.builder()
+
+        return Genre.builder()
                 .code(genreDTO.getCode())
                 .name(genreDTO.getName())
                 .description(genreDTO.getDescription())
                 .displayOrder(genreDTO.getDisplayOrder())
                 .active(true)
                 .build();
-
-        if(genreDTO.getParentGenreId() != null){
-            genreRepository.findById(genreDTO.getParentGenreId()).ifPresent(
-                    genre::setParentGenre
-            );
-        }
-        return genre;
     }
 }
