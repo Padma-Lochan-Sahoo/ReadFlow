@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: ReadFlow
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/read_flow_library
+    username: root
+    password: padma@8503
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+
+
