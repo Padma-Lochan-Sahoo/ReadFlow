@@ -6,6 +6,7 @@ import com.library.ReadFlow.repositories.GenreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -32,8 +33,8 @@ public class GenreMapper {
             if(savedGenre.getSubGenres() != null && !savedGenre.getSubGenres().isEmpty()){
                 dto.setSubGenres(savedGenre.getSubGenres()
                         .stream()
-                        .filter( subGenre -> subGenre.getActive())
-                        .map(subGenre -> toDTO(subGenre)).collect(Collectors.toList()));
+                        .filter(Genre::getActive)
+                        .map(this::toDTO).collect(Collectors.toList()));
             }
 
 
@@ -55,5 +56,20 @@ public class GenreMapper {
                 .displayOrder(genreDTO.getDisplayOrder())
                 .active(true)
                 .build();
+    }
+
+    public void updateEntityFromDTO(GenreDTO dto,Genre existingGenre){
+        if(dto == null || existingGenre == null) return;
+        existingGenre.setCode(dto.getCode());
+        existingGenre.setName(dto.getName());
+        existingGenre.setDescription(dto.getDescription());
+        existingGenre.setDisplayOrder(dto.getDisplayOrder() != null ? dto.getDisplayOrder()  : existingGenre.getDisplayOrder());
+        if(dto.getActive() != null){
+            existingGenre.setActive(dto.getActive());
+        }
+    }
+
+    public List<GenreDTO> toDTOList(List<Genre> genreList){
+        return genreList.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }
