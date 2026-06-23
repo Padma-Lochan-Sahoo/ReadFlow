@@ -47,14 +47,14 @@ public class GenreController {
     }
 
     @DeleteMapping("/{genreId}")
-    public ResponseEntity<?> deleteGenre(@PathVariable("genreId") Long genreId) {
+    public ResponseEntity<ApiResponse> deleteGenre(@PathVariable("genreId") Long genreId) {
         genreService.deleteGenre(genreId);
         ApiResponse response = new ApiResponse("Genre deleted - soft delete",true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/{genreId}/hard")
-    public ResponseEntity<?> hardDeleteGenre(@PathVariable("genreId") Long genreId) {
+    public ResponseEntity<ApiResponse> hardDeleteGenre(@PathVariable("genreId") Long genreId) {
         genreService.hardDeleteGenre(genreId);
         ApiResponse response = new ApiResponse("Genre deleted - hard delete",true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
