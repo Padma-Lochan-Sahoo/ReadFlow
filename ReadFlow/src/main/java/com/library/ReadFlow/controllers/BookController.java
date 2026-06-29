@@ -20,18 +20,6 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
 
-    @PostMapping
-    public ResponseEntity<BookDTO> createBook(@Valid @RequestBody BookDTO bookDTO){
-        BookDTO createdBook = bookService.createBook(bookDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
-    }
-
-    @PostMapping("/bulk")
-    public ResponseEntity<List<BookDTO>> createBooksBulk(@RequestBody List<@Valid BookDTO> bookDTOS){
-        List<BookDTO> createdBooks = bookService.createBooksBulk(bookDTOS);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdBooks);
-    }
-
     @GetMapping("/{bookId}")
     public ResponseEntity<BookDTO> getBookById(@PathVariable Long bookId){
         BookDTO book = bookService.getBookById(bookId);

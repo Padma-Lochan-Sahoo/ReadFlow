@@ -1,0 +1,34 @@
+package com.library.ReadFlow.payload.dtos;
+
+import com.library.ReadFlow.domain.UserRole;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDTO {
+    private Long id;
+    
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    private String email;
+
+
+    @NotNull(message = "Password is required")
+    private String password;
+    private String phone;
+
+    @NotNull(message = "fullName is Required")
+    private String fullName;
+    private UserRole role;
+    private String userName;
+
+    private LocalDateTime lastLogin;
+}
