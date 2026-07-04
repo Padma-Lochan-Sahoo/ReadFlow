@@ -52,19 +52,19 @@ public class GlobalException {
                 .body(errors);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse>
-    handleException(Exception e){
-
-        return ResponseEntity
-                .status(
-                        HttpStatus.INTERNAL_SERVER_ERROR
-                )
-                .body(
-                        new ApiResponse(
-                                "Something went wrong",
-                                false
-                        )
-                );
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ApiResponse>
+//    handleException(Exception e){
+//
+//        return ResponseEntity
+//                .status(
+//                        HttpStatus.INTERNAL_SERVER_ERROR
+//                )
+//                .body(
+//                        new ApiResponse(
+//                                "Something went wrong",
+//                                false
+//                        )
+//                );
+//    }
 }
