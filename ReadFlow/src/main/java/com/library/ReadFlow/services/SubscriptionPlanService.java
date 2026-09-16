@@ -1,5 +1,6 @@
 package com.library.ReadFlow.services;
 
+import com.library.ReadFlow.entites.SubscriptionPlan;
 import com.library.ReadFlow.payload.dtos.SubscriptionPlanDTO;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface SubscriptionPlanService {
     void deleteSubscriptionPlan(Long planId);
 
     List<SubscriptionPlanDTO> getAllSubscriptionPlan();
+
+    SubscriptionPlan getBySubscriptionPlanCode(String subscriptionPlanCode);
 }

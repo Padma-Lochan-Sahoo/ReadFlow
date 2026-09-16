@@ -3,6 +3,7 @@ package com.library.ReadFlow.controllers;
 import com.library.ReadFlow.exceptions.SubscriptionException;
 import com.library.ReadFlow.payload.dtos.SubscriptionDTO;
 import com.library.ReadFlow.payload.response.ApiResponse;
+import com.library.ReadFlow.payload.response.PaymentInitiateResponse;
 import com.library.ReadFlow.services.SubscriptionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +26,10 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
 
     @PostMapping("/subscribe")
-    public ResponseEntity<SubscriptionDTO> subscribe(
+    public ResponseEntity<PaymentInitiateResponse> subscribe(
             @RequestBody SubscriptionDTO subscriptionDTO
             ){
-        SubscriptionDTO dto = subscriptionService.subscribe(subscriptionDTO);
+        PaymentInitiateResponse dto = subscriptionService.subscribe(subscriptionDTO);
         return ResponseEntity.ok(dto);
     }
 

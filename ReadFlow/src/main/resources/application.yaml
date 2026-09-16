@@ -31,3 +31,10 @@ spring:
           timeout: 5000
           writetimeout: 500
 
+
+razorpay:
+  key:
+    id: rzp_test_TcVgy62IOqB5hB
+    secret: x79cHyAJV58ytmQdsjOYlAzh
+  callback:
+    base-url: http://localhost:5173

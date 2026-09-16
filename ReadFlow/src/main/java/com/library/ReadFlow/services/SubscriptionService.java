@@ -1,12 +1,13 @@
 package com.library.ReadFlow.services;
 
 import com.library.ReadFlow.payload.dtos.SubscriptionDTO;
+import com.library.ReadFlow.payload.response.PaymentInitiateResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface SubscriptionService {
-    SubscriptionDTO subscribe(SubscriptionDTO subscriptionDTO);
+    PaymentInitiateResponse subscribe(SubscriptionDTO subscriptionDTO);
 
     SubscriptionDTO getUsersActiveSubscription(Long userId);
 

@@ -1,13 +1,18 @@
 package com.library.ReadFlow.services.impl;
 
+import com.library.ReadFlow.domain.PaymentGateway;
+import com.library.ReadFlow.domain.PaymentType;
 import com.library.ReadFlow.entites.Subscription;
 import com.library.ReadFlow.entites.SubscriptionPlan;
 import com.library.ReadFlow.entites.User;
 import com.library.ReadFlow.exceptions.SubscriptionException;
 import com.library.ReadFlow.mapper.SubscriptionMapper;
 import com.library.ReadFlow.payload.dtos.SubscriptionDTO;
+import com.library.ReadFlow.payload.request.PaymentInitiateRequest;
+import com.library.ReadFlow.payload.response.PaymentInitiateResponse;
 import com.library.ReadFlow.repositories.SubscriptionPlanRepository;
 import com.library.ReadFlow.repositories.SubscriptionRepository;
+import com.library.ReadFlow.services.PaymentService;
 import com.library.ReadFlow.services.SubscriptionService;
 import com.library.ReadFlow.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +34,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final SubscriptionMapper subscriptionMapper;
     private final UserService userService;
     private final SubscriptionPlanRepository subscriptionPlanRepository;
+    private final PaymentService paymentService;
+
 
     @Override
-    public SubscriptionDTO subscribe(SubscriptionDTO subscriptionDTO) {
+    public PaymentInitiateResponse subscribe(SubscriptionDTO subscriptionDTO) {
         User user = userService.getCurrentUser();
 
         SubscriptionPlan plan = subscriptionPlanRepository
@@ -45,8 +52,16 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         Subscription savedSubscription = subscriptionRepository.save(subscription);
         //  todo: Create Payment
 
-
-        return subscriptionMapper.toDTO(savedSubscription);
+        PaymentInitiateRequest paymentInitiateRequest = PaymentInitiateRequest
+                .builder()
+                .userId(user.getId())
+                .subscriptionId(subscription.getId())
+                .paymentType(PaymentType.MEMBERSHIP)
+                .paymentGateway(PaymentGateway.RAZORPAY)
+                .amount(subscription.getPrice())
+                .description("Library Subscription - "+plan.getName())
+                .build();
+        return paymentService.initiatePayment(paymentInitiateRequest);
     }
 
     @Override
